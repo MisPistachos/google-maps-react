@@ -74,6 +74,9 @@ export class Map extends React.Component {
 
         this.geoPromise.promise.then(pos => {
             const coords = pos.coords;
+            if(this.props.locationUpdate !== undefined){
+              this.props.locationUpdate(coords)
+            }
             this.setState({
               currentLocation: {
                 lat: coords.latitude,
@@ -272,7 +275,8 @@ Map.propTypes = {
   disableDoubleClickZoom: T.bool,
   noClear: T.bool,
   styles: T.array,
-  gestureHandling: T.string
+  gestureHandling: T.string,
+  locationUpdate: T.func,
 }
 
 evtNames.forEach(e => Map.propTypes[camelize(e)] = T.func)
